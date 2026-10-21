@@ -13,25 +13,23 @@ class Solution {
         if (list1 == null) return list2;
         if (list2 == null) return list1;
 
-        ListNode head = list1.val > list2.val ? list2 : list1;
-        ListNode cur = head;
-        ListNode target = list1.val > list2.val ? list1 : list2;
+        ListNode result = new ListNode();
+        ListNode cur = result;
 
-        while (cur.next != null && target != null) {
-            if (cur.next.val >= target.val) {
-                ListNode next = target.next;
-                target.next = cur.next;
-                cur.next = target;
-                target = next;
+        while (list1 != null && list2 != null) {
+            if (list1.val > list2.val) {
+                cur.next = list2;
+                list2 = list2.next;
             } else {
-                cur = cur.next;
+                cur.next = list1;
+                list1 = list1.next;
             }
+            cur = cur.next;
         }
 
-        if (target != null) {
-            cur.next = target;
-        }
+        if (list1 == null) cur.next = list2;
+        else cur.next = list1;
 
-        return head;
+        return result.next;
     }
 }
